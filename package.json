@@ -1,0 +1,36 @@
+{
+  "name": "tweetanalytics",
+  "version": "0.0.0",
+  "description": "Tweet Data Analytics With Naive Bayes Classifier",
+  "private": true,
+  "scripts": {
+    "start": "node ./bin/www"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rayzalzero/tweet-analytics.git"
+  },
+  "dependencies": {
+    "body-parser": "~1.17.1",
+    "cookie-parser": "~1.4.3",
+    "debug": "~2.6.3",
+    "ejs": "~2.5.6",
+    "express": "~4.15.2",
+    "morgan": "~1.8.1",
+    "serve-favicon": "~2.4.2"
+  },
+  "keywords": [
+    "naive",
+    "bayes",
+    "classifier",
+    "tweet",
+    "data",
+    "twitter"
+  ],
+  "author": "Naufal Riza Fatahillah",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rayzalzero/tweet-analytics/issues"
+  },
+  "homepage": "https://github.com/rayzalzero/tweet-analytics#readme"
+}
