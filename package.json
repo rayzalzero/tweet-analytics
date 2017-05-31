@@ -11,13 +11,20 @@
     "url": "git+https://github.com/rayzalzero/tweet-analytics.git"
   },
   "dependencies": {
+    "bcrypt-nodejs": "0.0.3",
     "body-parser": "~1.17.1",
+    "connect-flash": "^0.1.1",
     "cookie-parser": "~1.4.3",
     "debug": "~2.6.3",
     "ejs": "~2.5.6",
     "express": "~4.15.2",
-    "morgan": "~1.8.1",
-    "serve-favicon": "~2.4.2"
+    "express-session": "^1.15.3",
+    "mongoose": "^4.10.0",
+    "morgan": "^1.8.2",
+    "natural": "^0.5.1",
+    "passport": "^0.3.2",
+    "passport-local": "^1.0.0",
+    "twit": "^2.2.5"
   },
   "keywords": [
     "naive",

@@ -1,0 +1,48 @@
+<% include partials/head %>
+  <body>
+    <div class="container">
+      <nav class="navbar navbar-inverse">
+        <div class="container-fluid">
+          <div class="navbar-header">
+            <a class="navbar-brand" href="#">Tweet Classifier</a>
+          </div>
+          <ul class="nav navbar-nav">
+            <li class="active"><a href="/admin/home">Home</a></li>
+            <li><a href="/admin/training">Training</a></li>
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+            <li><span><strong>admin id</strong> : <%= user._id ? user._id : '' %> </span></li>
+            <li><a href="/admin/logout"> Sign out</a></li>
+          </ul>
+        </div>
+      </nav>
+      </br>
+      <p>Banyak Data Training : <%- data.length %> </p>
+      <div class="pre-scrollable" width="50">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>Data</th>
+                    <th>Label</th>
+                    <th>Aksi</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                <% data.forEach( function( data ){ %>
+                    <td><%= data.data %></td>
+                    <td><%= data.label %></td>
+                    <td>
+                        <!-- <a href='getviewmaps/<%= data.id %>'><button class="btn btn-default"><i class="glyphicon glyphicon-search"></i></button></a> -->
+                        <a href='/admin/delete/<%= data.id %>'><button class="btn btn-default" onclick="return confirm('Are you sure ?')">Delete</button></a>
+                    </td>
+                </tr>
+                </tbody>
+                <% }); %>
+            </table>
+        </div>  
+      <div id="chart_div"></div>
+      <%- include('../layout/footer') %>
+    </div>
+  </body>
+</html>
