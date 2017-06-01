@@ -24,7 +24,7 @@
     "natural": "^0.5.1",
     "passport": "^0.3.2",
     "passport-local": "^1.0.0",
-    "twit": "^2.2.5"
+    "twitter": "^1.7.0"
   },
   "keywords": [
     "naive",
