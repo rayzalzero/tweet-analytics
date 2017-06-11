@@ -12,7 +12,9 @@ const client = new Twitter({
 });
 
 router.get('/home', isLoggedIn, function (req, res, next) {
-  Training.find({}, function (err, data) {
+  var query = Training.find({}).sort( { $natural: -1 } );
+  query.exec(function (err, data) {
+  //Training.find({}, function (err, data) {
     res.render('admin/home', { data: data, user: req.user })
   });
 });
@@ -25,19 +27,29 @@ router.get('/training', isLoggedIn, function (req, res, next) {
 
 router.post('/training', isLoggedIn, function (req, res, next) {
   let tag = req.body.tag
-  client.get('search/tweets', { q: tag, count: 25 }, function (error, tweets, response) {
+  client.get('search/tweets', { q: `${tag} -filter:retweets`, count: 25 }, function (error, tweets, response) {
   //Training.find({}, function (err, data) {
     let data = tweets.statuses
     //console.log(data.text)
+    //res.json(tweets)
     res.render('admin/training', {data:data, user:req.user })
   //});
   })
 });
 
 router.post('/settraining', isLoggedIn, function (req, res, next) {
-  let label = req.body.label
-  let data = req.body.data
-  console.log(data)
+  let labels = req.body.label
+  let datas = req.body.data
+  for (var i = 0; i < datas.length; i++) {
+    Training.create({
+                      data: datas[i],
+                      label: labels[i]
+                    }, function (err, post) {
+                      if (err) return next(err);
+                      //res.redirect('/admin/maps')
+                    });
+  }
+  res.redirect("/admin/home")
 });
 
 router.get('/', function (req, res, next) {
@@ -52,7 +64,7 @@ router.get('/logout', function (req, res) {
 router.get('/delete/:id', function (req, res, next) {
   Training.remove({ _id: req.params.id }, function (err, post) {
     if (err) return next(err);
-    res.redirect('/admin')
+    res.redirect('/admin/home')
   });
 });
 

@@ -41,11 +41,11 @@
               <% data.forEach( function( data ){ %>
                 <tbody>
                   <td>
-                    <%= data.text %>
+                    <textarea class="form-control" id="comment" name="data"><%= data.text %></textarea>
                   </td>
                   <td><select class="form-control" name="label">
-                      <option>Positif</option>
-                      <option>Negatif</option>
+                      <option value="positif">Positif</option>
+                      <option value="negatif">Negatif</option>
                     </select></td>
                   <td>
                     <!-- <a href='getviewmaps/<%= data.id %>'><button class="btn btn-default"><i class="glyphicon glyphicon-search"></i></button></a> -->
@@ -62,5 +62,4 @@
       <%- include('../layout/footer') %>
     </div>
   </body>
-
   </html>

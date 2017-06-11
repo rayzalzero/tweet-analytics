@@ -33,10 +33,26 @@
   </head>
   <body>
     <div class="container">
-      <header class="jumbotron hero-spacer">
-        <h1>Selamat Datang</h1>
-        <p>Silahkan masukkan keyword tweet dikolom pencarian</p>
-      </header>
+      <div class="page-header">
+        <h1>Klasifikasi Tweet</h1>
+      </div>
+      <p class="lead">Situs pengklasifikasian tweet.</p>
+      <p class="lead">Berikut hasil akurasi dan laju error.</p>
+      <br/>
+      <div class="progress">
+        <div class="progress-bar" role="progressbar" aria-valuenow="<%- akurasi %>"
+        aria-valuemin="0" aria-valuemax="100" style="width:<%- akurasi %>%">
+          <%- akurasi %> % Tingkat Akurasi
+        </div>
+      </div>
+      <br/>
+      <div class="progress">
+        <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="<%- lajuerror %>"
+        aria-valuemin="0" aria-valuemax="100" style="width:<%- lajuerror %>%">
+          <%- lajuerror %> % Laju error
+        </div>
+      </div>
+     <br/>
       <nav class="navbar navbar-toggleable-md navbar-light bg-faded">
         <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
@@ -47,15 +63,6 @@
               <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
             </li>
           </ul>
-          <form class="form-inline my-2 my-lg-0" action="/tweet" method="post">
-            <div class="input-daterange input-group">
-                <input type="text" class="input-sm form-control" name="start" id="datepicker1" />
-                <span class="input-group-addon">to</span>
-                <input type="text" class="input-sm form-control" name="end" id="datepicker2"/>
-            </div>
-            <input class="form-control mr-sm-2" type="text" data-toggle="tooltip" data-placement="top" title="Silahkan masukkan keyword" placeholder="Search" name="tag" id="tag">
-            <button class="btn btn-outline-success my-2 my-sm-0"type="submit">Search</button>
-          </form>
         </div>
       </nav>
       </br>
@@ -87,9 +94,9 @@
         <div class="col-sm-3">
             <div id="total"></div>
             <div id="piechart"></div>
+            <a href="/"><button class="btn btn-outline-success my-2 my-sm-0">Kembali ke halaman utama</button></a>
         </div>
       </div>
-      <%- include('../views/layout/footer') %>
     </div>
   </body>
 </html>
