@@ -15,7 +15,7 @@ const client = new Twitter({
 
 /* GET home page. */
 router.get('/', function (req, res, next) {
-	var query = Hasil.find({}).limit(5).sort( { $natural: -1 } );
+	let query = Hasil.find({}).limit(5).sort( { $natural: -1 } );
 	query.exec(function (err, tra) {
 		let data = [];
 		let Header = ['Keyword', 'Positif', 'Negatif', 'Netral'];
@@ -59,7 +59,7 @@ router.post('/tweet', function (req, res, next) {
 				databenar++;
 			}else{
 				datasalah++;
-				console.log(tra[j].data + 'salah');
+				//console.log(tra[j].data + 'salah');
 				//console.log(tra[j].data, nbayes.probabilities(tra[j].data));
 			}
 		}
