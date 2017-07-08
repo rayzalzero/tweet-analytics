@@ -4,21 +4,18 @@ var mongoose = require('mongoose');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-var logger = require('morgan');  
-var cookieParser = require('cookie-parser');  
-var bodyParser = require('body-parser');
-
 
 var configDB = require('./config/database.js');
 mongoose.Promise = global.Promise;
-mongoose.connect(configDB.url); // connect to our database
+//mongoose.connect(configDB.url, options); // connect to our database
+// mongoose.connect(configDB.url,{ useMongoClient: true });
+mongoose.connection.openUri(configDB.url,{ useMongoClient: true })
 
 var index = require('./routes/index');
 var admin = require('./routes/admin');
 
 var passport = require('passport');  
-var LocalStrategy = require('passport-local').Strategy;  
-var mongoose = require('mongoose');  
+var LocalStrategy = require('passport-local').Strategy;    
 var flash = require('connect-flash');  
 var session = require('express-session');
 
@@ -48,20 +45,20 @@ app.use('/admin', admin);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
-  var err = new Error('Not Found');
-  err.status = 404;
-  next(err);
+	var err = new Error('Not Found');
+	err.status = 404;
+	next(err);
 });
 
 // error handler
 app.use(function(err, req, res, next) {
   // set locals, only providing error in development
-  res.locals.message = err.message;
-  res.locals.error = req.app.get('env') === 'development' ? err : {};
+	res.locals.message = err.message;
+	res.locals.error = req.app.get('env') === 'development' ? err : {};
 
   // render the error page
-  res.status(err.status || 500);
-  res.render('error');
+	res.status(err.status || 500);
+	res.render('error');
 });
 
 module.exports = app;

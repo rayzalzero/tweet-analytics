@@ -1,0 +1,8 @@
+{
+    "name": "Twitter Analytics",
+    "description": "Analytics tweet",
+    "repository": "https://github.com/heroku/node-js-getting-started",
+    "logo": "http://node-js-sample.herokuapp.com/logo.svg",
+    "keyword": ["node"],
+    "image": "heroku/nodejs"
+}

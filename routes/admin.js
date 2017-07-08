@@ -5,86 +5,114 @@ var Training = require('../models/training.js');
 const Twitter = require('twitter');
 
 const client = new Twitter({
-  consumer_key: 'uGGP2BkPdPbNILdQ7MzbScHxs',
-  consumer_secret: '8XBdqgCsMwTUwHOBKROXPMDwWwG9yAYlwuL3w4p0PXKg4xiEYw',
-  access_token_key: '559978133-St9zmnkO5oLJmswUWcih7ZCusS3vpQXfLNYlhaWH',
-  access_token_secret: 'D7kiO2ijLqAsS5Z06e0lor3RtByY22a7Zjp7DYbUf5vuS'
+	consumer_key: 'uGGP2BkPdPbNILdQ7MzbScHxs',
+	consumer_secret: '8XBdqgCsMwTUwHOBKROXPMDwWwG9yAYlwuL3w4p0PXKg4xiEYw',
+	access_token_key: '559978133-St9zmnkO5oLJmswUWcih7ZCusS3vpQXfLNYlhaWH',
+	access_token_secret: 'D7kiO2ijLqAsS5Z06e0lor3RtByY22a7Zjp7DYbUf5vuS'
 });
 
+function clean(data) {
+	data = data.replace(/(?:https?|ftp):\/\/[\n\S]+|\B[@#]\w+\b|\b\w+[@#]\B|\B[^\w\s]{2,}\B| +/g, ' ');
+	return data;
+}
+
+function isLetter(c) {
+	return c.toLowerCase() != c.toUpperCase();
+}
+
 router.get('/home', isLoggedIn, function (req, res, next) {
-  var query = Training.find({}).sort( { $natural: -1 } );
-  query.exec(function (err, data) {
+	var query = Training.find({}).sort( { $natural: -1 } );
+	query.exec(function (err, data) {
   //Training.find({}, function (err, data) {
-    res.render('admin/home', { data: data, user: req.user })
-  });
+		res.render('admin/home', { data: data, user: req.user });
+	});
 });
 
 router.get('/training', isLoggedIn, function (req, res, next) {
   //Training.find({}, function (err, data) {
-    res.render('admin/training', {user: req.user })
+	res.render('admin/training', {user: req.user });
   //});
 });
 
 router.post('/training', isLoggedIn, function (req, res, next) {
-  let tag = req.body.tag
-  client.get('search/tweets', { q: `${tag} -filter:retweets`, count: 25 }, function (error, tweets, response) {
+	let tag = req.body.tag;
+	client.get('search/tweets', { q: `${tag} -filter:retweets`, count: 25 }, function (error, tweets, response) {
   //Training.find({}, function (err, data) {
-    let data = tweets.statuses
+		let data = tweets.statuses;
+		let kirimdata = [];
+		for (var i = 0; i < data.length; i++) {
+			var element = data[i].text;
+			//kirimdata[i] = data[i].text;
+			if (isLetter(element)) {
+				kirimdata.push(clean(element));
+			} 			
+		}
+		//data.forEach(function(element) {
+		//	kirimdata = [clean(element.text)];
+		//	
+		//	//var fruits = ["Banana", "Orange", "Apple", "Mango"];
+		//	kirimdata.push(kirimdata);
+		//});
+		//console.log(kirimdata);
     //console.log(data.text)
     //res.json(tweets)
-    res.render('admin/training', {data:data, user:req.user })
+		res.render('admin/training', {data:kirimdata, user:req.user });
   //});
-  })
+	});
 });
 
 router.post('/settraining', isLoggedIn, function (req, res, next) {
-  let labels = req.body.label
-  let datas = req.body.data
-  for (var i = 0; i < datas.length; i++) {
-    Training.create({
-                      data: datas[i],
-                      label: labels[i]
-                    }, function (err, post) {
-                      if (err) return next(err);
+	let labels = req.body.label;
+	let datas = req.body.data;
+	for (var i = 0; i < datas.length; i++) {
+		if(datas[i] != ''){
+			Training.create({
+				data: datas[i],
+				label: labels[i]
+			}, function (err, post) {
+				if (err) return next(err);
                       //res.redirect('/admin/maps')
-                    });
-  }
-  res.redirect("/admin/home")
+			});
+		}else{
+
+		}
+	}
+	res.redirect('/admin/home');
 });
 
 router.get('/', function (req, res, next) {
-  res.render('admin/index', { message: req.flash('loginMessage') });
+	res.render('admin/index', { message: req.flash('loginMessage') });
 });
 
 router.get('/logout', function (req, res) {
-  req.logout();
-  res.redirect('/admin/home');
+	req.logout();
+	res.redirect('/admin/home');
 });
 
 router.get('/delete/:id', function (req, res, next) {
-  Training.remove({ _id: req.params.id }, function (err, post) {
-    if (err) return next(err);
-    res.redirect('/admin/home')
-  });
+	Training.remove({ _id: req.params.id }, function (err, post) {
+		if (err) return next(err);
+		res.redirect('/admin/home');
+	});
 });
 
 router.post('/', function (req, res, next) {
-  Training.create(req.body, function (err, post) {
-    if (err) return next(err);
-    res.redirect('/admin')
-  });
+	Training.create(req.body, function (err, post) {
+		if (err) return next(err);
+		res.redirect('/admin');
+	});
 });
 
 router.post('/login', passport.authenticate('local-login', {
-  successRedirect: '/admin/home',
-  failureRedirect: '/admin',
-  failureFlash: true,
+	successRedirect: '/admin/home',
+	failureRedirect: '/admin',
+	failureFlash: true,
 }));
 
 function isLoggedIn(req, res, next) {
-  if (req.isAuthenticated())
-    return next();
-  res.redirect('/admin');
+	if (req.isAuthenticated())
+		return next();
+	res.redirect('/admin');
 }
 
 module.exports = router;

@@ -6,6 +6,9 @@
   "scripts": {
     "start": "node ./bin/www"
   },
+  "engines": {
+    "node": "6.10.3"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/rayzalzero/tweet-analytics.git"
@@ -19,8 +22,7 @@
     "ejs": "~2.5.6",
     "express": "~4.15.2",
     "express-session": "^1.15.3",
-    "io-naivebayes": "^1.0.7",
-    "mongoose": "^4.10.0",
+    "mongoose": "^4.10.8",
     "morgan": "^1.8.2",
     "natural": "^0.5.1",
     "passport": "^0.3.2",

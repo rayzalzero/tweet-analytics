@@ -28,35 +28,37 @@
       </form>
       </br>
       <form action="/admin/settraining" method="post">
+      <% if (data.length === 0){ %>
+        <div class="alert alert-danger">
+        <strong>Maaf!</strong> Pencarian anda tidak dapat ditemukan.
+        </div>
+      <%}%>
       <div class="pre-scrollable" width="50">
         <table class="table">
           <thead>
             <tr>
               <th>Data</th>
               <th>Label</th>
-              <th>Aksi</th>
             </tr>
           </thead>
           <tr>
               <% data.forEach( function( data ){ %>
                 <tbody>
                   <td>
-                    <textarea class="form-control" id="comment" name="data"><%= data.text %></textarea>
+                    <textarea class="form-control" id="comment" name="data"><%= data %></textarea>
                   </td>
                   <td><select class="form-control" name="label">
                       <option value="positif">Positif</option>
                       <option value="negatif">Negatif</option>
                     </select></td>
                   <td>
-                    <!-- <a href='getviewmaps/<%= data.id %>'><button class="btn btn-default"><i class="glyphicon glyphicon-search"></i></button></a> -->
-                    <a href='/admin/delete/<%= data.id %>'><button class="btn btn-default" onclick="deleteItem()">Delete</button></a>
                   </td>
           </tr>
           </tbody>
           <% }); %>
         </table>
       </div>
-      <button type="submit" class="btn btn-success">Success</button>
+      <button type="submit" class="btn btn-success">Simpan</button>
       </form>
       <div id="chart_div"></div>
       <%- include('../layout/footer') %>
