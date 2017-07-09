@@ -3,7 +3,6 @@ const router = express.Router();
 const Twitter = require('twitter');
 const Training = require('../models/training.js');
 const Hasil = require('../models/hasil.js');
-//const nbayes = require('io-naivebayes');
 const nbayes = require('../config/naivebayes/nb');
 
 const client = new Twitter({
@@ -76,11 +75,10 @@ router.post('/tweet', function (req, res, next) {
 			let cl = [];
 			let hcl = [];
 			for (let i = 0; i < data.length; i++) {
-				let hasilklasifikasi = nbayes.classify(data[i].text);
 				let bilhasilklasifikasi = nbayes.classifyplus(data[i].text);
 				tw[i] = data[i].text;
-				cl[i] = hasilklasifikasi;
-				hcl[i] = bilhasilklasifikasi;
+				cl[i] = bilhasilklasifikasi.hasil;
+				hcl[i] = bilhasilklasifikasi.nilai;
 				hasil.tweet = tw;
 				hasil.klasifikasi = cl;
 				hasil.bilanganklasifikasi = hcl;

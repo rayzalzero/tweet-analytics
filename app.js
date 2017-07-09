@@ -9,7 +9,7 @@ var configDB = require('./config/database.js');
 mongoose.Promise = global.Promise;
 //mongoose.connect(configDB.url, options); // connect to our database
 // mongoose.connect(configDB.url,{ useMongoClient: true });
-mongoose.connection.openUri(configDB.url,{ useMongoClient: true })
+mongoose.connection.openUri(configDB.url,{ useMongoClient: true });
 
 var index = require('./routes/index');
 var admin = require('./routes/admin');
