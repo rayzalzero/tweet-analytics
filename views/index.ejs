@@ -5,21 +5,25 @@
     <%- include('../views/layout/layout') %>
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script type="text/javascript">
-    google.charts.load('current', {'packages':['corechart']});
+      google.charts.load('current', {'packages':['bar']});
       google.charts.setOnLoadCallback(drawChart);
       var co = <%- data %>;
       function drawChart() {
         var data = google.visualization.arrayToDataTable(co);
-
         var options = {
-          title: 'Hasil Klasifikasi',
-          curveType: 'function',
-          legend: { position: 'bottom' }
+          chart: {
+            title: 'Hasil Klasifikasi',
+            subtitle: '7 Data Klasifikasi Terakhir',
+          },
+          bars: 'vertical',
+          vAxis: {format: 'decimal'},
+          height: 400,
+          colors: ['#4286f4', '#e80d0d', '#74998d']
         };
 
-        var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
-      
-        chart.draw(data, options);
+        var chart = new google.charts.Bar(document.getElementById('chart_div'));
+
+        chart.draw(data, google.charts.Bar.convertOptions(options));
       }
         $( function() {
           $( "#datepicker1" ).datepicker({ minDate: -7, maxDate: "0", dateFormat: 'yy-mm-dd' }).val();
@@ -60,11 +64,11 @@
           <label for="pwd">Silahkan masukkan keyword pencarian</label>
           <input class="form-control mr-sm-2" placeholder="Search" name="tag" id="tag">
         </div>
-        <button class="btn btn-outline-success my-2 my-sm-0"type="submit">Search</button>
+        <button class="btn btn-outline-success my-2 my-sm-0"type="submit">Cari</button>
       </form>
       <br/>
       <p>Berikut ini adalah hasil klasifikasi dari data pencarian yang sebelumnya.</p>
-      <div id="curve_chart"></div>  
+      <div id="chart_div"></div>  
     </div>
     <%- include('./layout/footer') %>
   </body>

@@ -21,7 +21,7 @@ router.get('/', function (req, res, next) {
 		data.push(Header);
 		for (let i = 0; i < tra.length; i++) {
 			let co = [
-				tra[i].keyword, tra[i].klasifikasi.filter(function (item) { return item === 'positif'; }).length,
+				tra[i].keyword +'\n'+tra[i].range, tra[i].klasifikasi.filter(function (item) { return item === 'positif'; }).length,
 				tra[i].klasifikasi.filter(function (item) { return item === 'negatif'; }).length,
 				tra[i].klasifikasi.filter(function (item) { return item === 'netral'; }).length];
 			data.push(co);
@@ -34,6 +34,8 @@ router.post('/tweet', function (req, res, next) {
 	let tag = req.body.tag;
 	let startdate = req.body.start;
 	let enddate = req.body.end;
+	let mulai = new Date(startdate).toISOString().slice(0,10);
+	let akhir = new Date(enddate).toISOString().slice(0,10);
 	let tingkatakurasi;
 	let lajuerror;
 	function hitungakurasi(a, b, c) {
@@ -58,7 +60,7 @@ router.post('/tweet', function (req, res, next) {
 				databenar++;
 			}else{
 				datasalah++;
-				//console.log(tra[j].data + 'salah');
+				console.log(tra[j].data + 'salah');
 				//console.log(tra[j].data, nbayes.probabilities(tra[j].data));
 			}
 		}
@@ -88,7 +90,7 @@ router.post('/tweet', function (req, res, next) {
 				tweet: hasil.tweet,
 				klasifikasi: hasil.klasifikasi,
 				bilanganklasifikasi: hasil.bilanganklasifikasi,
-				range: startdate + ' ' + enddate
+				range: mulai + ' - ' + akhir
 			}, function (err, post) {
 				if (err) return next(err);
 			//res.redirect('/');
