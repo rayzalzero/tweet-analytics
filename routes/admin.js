@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var passport = require('passport');
 var Training = require('../models/training.js');
+const cleaner = require('../config/ckwd');
 const Twitter = require('twitter');
 
 const client = new Twitter({
@@ -11,53 +12,31 @@ const client = new Twitter({
 	access_token_secret: 'D7kiO2ijLqAsS5Z06e0lor3RtByY22a7Zjp7DYbUf5vuS'
 });
 
-function clean(data) {
-	data = data.replace(/(?:https?|ftp):\/\/[\n\S]+|\B[@#]\w+\b|\b\w+[@#]\B|\B[^\w\s]{2,}\B| +/g, ' ');
-	return data;
-}
-
-function isLetter(c) {
-	return c.toLowerCase() != c.toUpperCase();
-}
-
 router.get('/home', isLoggedIn, function (req, res, next) {
 	var query = Training.find({}).sort( { $natural: -1 } );
 	query.exec(function (err, data) {
-  //Training.find({}, function (err, data) {
 		res.render('admin/home', { data: data, user: req.user });
 	});
 });
 
 router.get('/training', isLoggedIn, function (req, res, next) {
-  //Training.find({}, function (err, data) {
 	res.render('admin/training', {user: req.user });
-  //});
 });
 
 router.post('/training', isLoggedIn, function (req, res, next) {
 	let tag = req.body.tag;
 	client.get('search/tweets', { q: `${tag} -filter:retweets`, count: 25 }, function (error, tweets, response) {
-  //Training.find({}, function (err, data) {
 		let data = tweets.statuses;
 		let kirimdata = [];
 		for (var i = 0; i < data.length; i++) {
 			var element = data[i].text;
-			//kirimdata[i] = data[i].text;
-			if (isLetter(element)) {
-				kirimdata.push(clean(element));
-			} 			
+			if (cleaner.cari(element).ckdw=='') {
+				
+			} else {
+				kirimdata.push({data:cleaner.cari(element).docs, ket:cleaner.cari(element).ckdw});
+			}	
 		}
-		//data.forEach(function(element) {
-		//	kirimdata = [clean(element.text)];
-		//	
-		//	//var fruits = ["Banana", "Orange", "Apple", "Mango"];
-		//	kirimdata.push(kirimdata);
-		//});
-		//console.log(kirimdata);
-    //console.log(data.text)
-    //res.json(tweets)
 		res.render('admin/training', {data:kirimdata, user:req.user });
-  //});
 	});
 });
 
@@ -71,7 +50,6 @@ router.post('/settraining', isLoggedIn, function (req, res, next) {
 				label: labels[i]
 			}, function (err, post) {
 				if (err) return next(err);
-                      //res.redirect('/admin/maps')
 			});
 		}else{
 

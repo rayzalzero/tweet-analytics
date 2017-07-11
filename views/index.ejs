@@ -55,14 +55,14 @@
         <div class="form-group">
           <label for="email">Priode Tanggal:</label>
           <div class="input-daterange input-group">
-                <input type="text" class="input-sm form-control" name="start" id="datepicker1" placeholder="Tanggal Mulai" />
+                <input type="text" class="input-sm form-control" name="start" id="datepicker1" placeholder="Tanggal Mulai" required />
                 <span class="input-group-addon">sampai</span>
-                <input type="text" class="input-sm form-control" name="end" id="datepicker2" placeholder="Tanggal Akhir"/>
+                <input type="text" class="input-sm form-control" name="end" id="datepicker2" placeholder="Tanggal Akhir" required/>
             </div>
         </div>
         <div class="form-group">
           <label for="pwd">Silahkan masukkan keyword pencarian</label>
-          <input class="form-control mr-sm-2" placeholder="Search" name="tag" id="tag">
+          <input class="form-control mr-sm-2" placeholder="Search" name="tag" id="tag" required>
         </div>
         <button class="btn btn-outline-success my-2 my-sm-0"type="submit">Cari</button>
       </form>

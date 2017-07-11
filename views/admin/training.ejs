@@ -39,23 +39,28 @@
             <tr>
               <th>Data</th>
               <th>Label</th>
+              <th>Ket</th>
             </tr>
           </thead>
           <tr>
-              <% data.forEach( function( data ){ %>
+              
+              <% for(let i=0; i<data.length; i++){ %>
                 <tbody>
                   <td>
-                    <textarea class="form-control" id="comment" name="data"><%= data %></textarea>
+                    <textarea class="form-control" id="comment" name="data"><%= data[i].data %></textarea>
                   </td>
-                  <td><select class="form-control" name="label">
+                  <td width="10%">
+                    <select class="form-control" name="label">
                       <option value="positif">Positif</option>
                       <option value="negatif">Negatif</option>
-                    </select></td>
-                  <td>
+                    </select>
+                  </td>
+                  <td width="10%">
+                    <%= data[i].ket %>
                   </td>
           </tr>
           </tbody>
-          <% }); %>
+          <%}%>
         </table>
       </div>
       <button type="submit" class="btn btn-success">Simpan</button>

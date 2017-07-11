@@ -44,18 +44,11 @@ router.post('/tweet', function (req, res, next) {
 		return this;
 	}
 	Training.find({}, function (err, tra) {
-		for (let j = 0; j < tra.length; j++) {
-			nbayes.train(tra[j].label, tra[j].data);
-		}
-	});
-	//var query = Training.find({}).limit(10).sort( { $natural: -1 } );
-	//query.exec(function (err, tra) {
-	Training.find({}, function (err, tra) {
 		let databenar = 0;
 		let datasalah = 0;
 		let alldatatrain = tra.length;
 		for (let j = 0; j < tra.length; j++) {
-			
+			nbayes.train(tra[j].label, tra[j].data);
 			if (nbayes.classify(tra[j].data) == tra[j].label) {
 				databenar++;
 			}else{
@@ -66,6 +59,24 @@ router.post('/tweet', function (req, res, next) {
 		}
 		hitungakurasi(databenar, datasalah, alldatatrain);
 	});
+	//var query = Training.find({}).limit(10).sort( { $natural: -1 } );
+	//query.exec(function (err, tra) {
+	// Training.find({}, function (err, tra) {
+	// 	let databenar = 0;
+	// 	let datasalah = 0;
+	// 	let alldatatrain = tra.length;
+	// 	for (let j = 0; j < tra.length; j++) {
+			
+	// 		if (nbayes.classify(tra[j].data) == tra[j].label) {
+	// 			databenar++;
+	// 		}else{
+	// 			datasalah++;
+	// 			console.log(tra[j].data + 'salah');
+	// 			//console.log(tra[j].data, nbayes.probabilities(tra[j].data));
+	// 		}
+	// 	}
+	// 	hitungakurasi(databenar, datasalah, alldatatrain);
+	// });
 	client.get('search/tweets', { q: `${tag} -filter:retweets since:${startdate} until:${enddate}`, count: 100 }, function (error, tweets, response) {
 		let data = tweets.statuses;
 		if (data.length === 0) {
