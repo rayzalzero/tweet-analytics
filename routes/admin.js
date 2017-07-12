@@ -27,16 +27,22 @@ router.post('/training', isLoggedIn, function (req, res, next) {
 	let tag = req.body.tag;
 	client.get('search/tweets', { q: `${tag} -filter:retweets`, count: 25 }, function (error, tweets, response) {
 		let data = tweets.statuses;
-		let kirimdata = [];
-		for (var i = 0; i < data.length; i++) {
-			var element = data[i].text;
-			if (cleaner.cari(element).ckdw=='') {
-				
-			} else {
-				kirimdata.push({data:cleaner.cari(element).docs, ket:cleaner.cari(element).ckdw});
-			}	
+		if (data.length === 0) {
+			console.log('data kosong');
+			res.render('empty');
+		}else{
+			console.log('ada');
+			let kirimdata = [];
+			for (var i = 0; i < data.length; i++) {
+				var element = data[i].text;
+				if (cleaner.cari(element).ckdw=='') {
+					
+				} else {
+					kirimdata.push({data:cleaner.cari(element).docs, ket:cleaner.cari(element).ckdw});
+				}	
+			}
+			res.render('admin/training', {data:kirimdata, user:req.user });
 		}
-		res.render('admin/training', {data:kirimdata, user:req.user });
 	});
 });
 
