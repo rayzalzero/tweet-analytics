@@ -1,8 +1,8 @@
-var mongoose = require('mongoose');
+const mongoose = require('mongoose');
 
-var TrainingSchema = new mongoose.Schema({  
-    data: String,
-    label: String
+let TrainingSchema = new mongoose.Schema({  
+	data: String,
+	label: String
 });
 
 module.exports = mongoose.model('Training', TrainingSchema); 

@@ -3,5 +3,6 @@
 open directory
 
 ~~~
+$ npm install
 $ nodemon start
 ~~~

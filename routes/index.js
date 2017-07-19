@@ -1,3 +1,4 @@
+//'use strict'
 const express = require('express');
 const router = express.Router();
 const Twitter = require('twitter');
@@ -14,7 +15,8 @@ const client = new Twitter({
 
 /* GET home page. */
 router.get('/', function (req, res, next) {
-	let query = Hasil.find({}).limit(5).sort( { $natural: -1 } );
+	//let query = Hasil.find({}).limit(7).sort( { $natural: -1 } );
+	let query = Hasil.find({}).sort({$natural:1}).limit(7);
 	query.exec(function (err, tra) {
 		let data = [];
 		let Header = ['Keyword', 'Positif', 'Negatif', 'Netral'];
@@ -54,29 +56,10 @@ router.post('/tweet', function (req, res, next) {
 			}else{
 				datasalah++;
 				console.log(tra[j].data + 'salah');
-				//console.log(tra[j].data, nbayes.probabilities(tra[j].data));
 			}
 		}
 		hitungakurasi(databenar, datasalah, alldatatrain);
 	});
-	//var query = Training.find({}).limit(10).sort( { $natural: -1 } );
-	//query.exec(function (err, tra) {
-	// Training.find({}, function (err, tra) {
-	// 	let databenar = 0;
-	// 	let datasalah = 0;
-	// 	let alldatatrain = tra.length;
-	// 	for (let j = 0; j < tra.length; j++) {
-			
-	// 		if (nbayes.classify(tra[j].data) == tra[j].label) {
-	// 			databenar++;
-	// 		}else{
-	// 			datasalah++;
-	// 			console.log(tra[j].data + 'salah');
-	// 			//console.log(tra[j].data, nbayes.probabilities(tra[j].data));
-	// 		}
-	// 	}
-	// 	hitungakurasi(databenar, datasalah, alldatatrain);
-	// });
 	client.get('search/tweets', { q: `${tag} -filter:retweets since:${startdate} until:${enddate}`, count: 100 }, function (error, tweets, response) {
 		let data = tweets.statuses;
 		if (data.length === 0) {

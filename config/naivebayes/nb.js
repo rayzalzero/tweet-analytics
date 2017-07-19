@@ -390,13 +390,13 @@ let vocab = {
 			'waspada','wastafel','ya silahkan saja','Yahudi', 'hoax']
 	}
 };
-var cekwordInDoc = function(word, _class, delta){
+let cekwordInDoc = function(word, _class, delta){
 	if (arguments.length < 3) delta = 1;
 	if (!(word in wordInDoc[_class])) wordInDoc[_class][word] = 0;
 	wordInDoc[_class][word] += delta;
 	return this;
 };
-var train = function(_class, docs) {
+let train = function(_class, docs) {
 	docs = stopword.stopwords(docs);
 	for (var i = 0;i < docs.length; i++) {
 		word = docs[i];
@@ -410,20 +410,20 @@ var train = function(_class, docs) {
 	docsByClass[_class]++;
 	sumDocs++;
 };
-var prior = function(_class){
-	var priori = (docsByClass[_class] / sumDocs);
+let prior = function(_class){
+	let priori = (docsByClass[_class] / sumDocs);
 	return priori;
 };
-var countV = function(){
+let countV = function(){
 	let vc = sumAllDocs.positif + sumAllDocs.negatif;
 	return vc;
 };
-var getword = function(_class, word){
+let getword = function(_class, word){
 	var ww = (word in wordInDoc[_class] ? wordInDoc[_class][word] : 0);
 	return ww; 
 };
 
-var likelihood = function(_class, docs) {
+let likelihood = function(_class, docs) {
 	var result = 1;
 	for (var word of docs){
 		var probWord = (getword(_class, word) + 1) / (sumAllDocs[_class] + countV());
@@ -431,7 +431,7 @@ var likelihood = function(_class, docs) {
 	}
 	return result;
 };
-var probabilities = function (docs) {
+let probabilities = function (docs) {
 	docs = stopword.stopwords(docs);
 	let result = {};
 	for (let _class in wordInDoc) {
@@ -439,7 +439,7 @@ var probabilities = function (docs) {
 	}
 	return result;
 };
-var classify = function (docs){
+let classify = function (docs){
 	docs = stopword.stopwords(docs);
 	let highest = -Infinity, result = null;
 	for (let _class in wordInDoc) {
@@ -454,7 +454,7 @@ var classify = function (docs){
 	}
 	return result;
 };
-var classifyplus = function (docs){
+let classifyplus = function (docs){
 	docs = stopword.stopwords(docs);
 	console.log(docs);
 	let highest = -Infinity, result = null, nilai = [];

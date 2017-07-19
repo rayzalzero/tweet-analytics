@@ -1,3 +1,4 @@
+//'use strict'
 const stopword = require('./naivebayes/porter/porter_id');
 
 let positif = ['a+','acungan jempol','adaptif','adil','afinitas','afirmasi','agilely','agung','ahli','ahlinya','ajaib','aklamasi',

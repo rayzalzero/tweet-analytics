@@ -1,7 +1,8 @@
-var express = require('express');
-var router = express.Router();
-var passport = require('passport');
-var Training = require('../models/training.js');
+//'use strict'
+const express = require('express');
+const router = express.Router();
+const passport = require('passport');
+const Training = require('../models/training.js');
 const cleaner = require('../config/ckwd');
 const Twitter = require('twitter');
 
@@ -13,7 +14,7 @@ const client = new Twitter({
 });
 
 router.get('/home', isLoggedIn, function (req, res, next) {
-	var query = Training.find({}).sort( { $natural: -1 } );
+	let query = Training.find({}).sort( { $natural: -1 } );
 	query.exec(function (err, data) {
 		res.render('admin/home', { data: data, user: req.user });
 	});
@@ -33,8 +34,8 @@ router.post('/training', isLoggedIn, function (req, res, next) {
 		}else{
 			console.log('ada');
 			let kirimdata = [];
-			for (var i = 0; i < data.length; i++) {
-				var element = data[i].text;
+			for (let i = 0; i < data.length; i++) {
+				let element = data[i].text;
 				if (cleaner.cari(element).ckdw=='') {
 					
 				} else {
@@ -49,7 +50,7 @@ router.post('/training', isLoggedIn, function (req, res, next) {
 router.post('/settraining', isLoggedIn, function (req, res, next) {
 	let labels = req.body.label;
 	let datas = req.body.data;
-	for (var i = 0; i < datas.length; i++) {
+	for (let i = 0; i < datas.length; i++) {
 		if(datas[i] != ''){
 			Training.create({
 				data: datas[i],

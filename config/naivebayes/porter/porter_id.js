@@ -1,3 +1,4 @@
+//'use strict'
 let clean = function (data) {
 	data = data.replace(/(?:https?|ftp):\/\/[\n\S]+|\B[@#]\w+\b|\b\w+[@#]\B|\B[^\w\s]{2,}\B|\b[a-zA-Z]{1,3}\b|[0-9]+|[$&+,:;=?@#|'<>.^*()%!-/]|\ud83d[\ude00-\ude4f]/g, '');
 	return data;
@@ -210,9 +211,8 @@ let stopwords = function (docs) {
 		'⛷','⛹','⛏','⛓','⛩','⭕','❗','🅿️','❦','♕','♛','♔','♖','♜','☾','→','⇒','⟹','⇨','⇰','➩','➪','➫','➬','➭',
 		'➮','➯','➲','➳','➵','➸','➻','➺','➼','➽','☜','☟','➹','➷','↶','↷','✆','⌘','⎋','⏎','⏏','⎈','⎌','⍟','❥','ツ',
 		'ღ','☻', '�', '💚'];
-
 	let docs1 = new Array;
-	var x =  0;
+	let x =  0;
 	for(let i = 0; i < docs.length; i++){
 		if(wordsstop.indexOf(docs[i]) !== -1 || docs[i] == ''){
 
@@ -223,15 +223,13 @@ let stopwords = function (docs) {
 	}
   //return docs1;
   // filter code below
-	var resultDocs = docs1.filter(function(data) {
-		var tmp = data.replace(/[a-zA-Z$&+,:;=?@#|'<>.^*()%!-/]/g, '');
+	let resultDocs = docs1.filter(function(data) {
+		let tmp = data.replace(/[a-zA-Z$&+,:;=?@#|'<>.^*()%!-/]/g, '');
 		if (tmp.length === 0) {
 			return true;
 		}
 	});
-
 	return resultDocs;
-
 };
 
 module.exports = {stopwords};

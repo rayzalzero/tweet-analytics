@@ -1,6 +1,6 @@
-var mongoose = require('mongoose');
+const mongoose = require('mongoose');
 
-var HasilSchema = new mongoose.Schema({  
+let HasilSchema = new mongoose.Schema({  
 	keyword: String,
 	range : String,
 	tweet: [],
