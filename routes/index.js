@@ -16,7 +16,7 @@ const client = new Twitter({
 /* GET home page. */
 router.get('/', function (req, res, next) {
 	//let query = Hasil.find({}).limit(7).sort( { $natural: -1 } );
-	let query = Hasil.find({}).sort({$natural:1}).limit(7);
+	let query = Hasil.find({}).sort({$natural:-1}).limit(7);
 	query.exec(function (err, tra) {
 		let data = [];
 		let Header = ['Keyword', 'Positif', 'Negatif', 'Netral'];
