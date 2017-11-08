@@ -456,7 +456,7 @@ let classify = function (docs){
 };
 let classifyplus = function (docs){
 	docs = stopword.stopwords(docs);
-	console.log(docs);
+	//console.log(docs);
 	let highest = -Infinity, result = null, nilai = [];
 	for (let _class in wordInDoc) {
 		let probability = prior(_class) * likelihood(_class, docs);
@@ -468,14 +468,15 @@ let classifyplus = function (docs){
 			result = _class;
 		}
 	}
+	console.log(result, nilai)
 	return {hasil : result, nilai : nilai};
 };
 let retraining = function () {
-	console.log(wordInDoc);
-	console.log(sumDocs);
-	console.log(sumAllDocs);
-	console.log(docsByClass);
-	console.log(countV());
+	//console.log(wordInDoc);
+	//console.log(sumDocs);
+	//console.log(sumAllDocs);
+	//console.log(docsByClass);
+	//console.log(countV());
 	wordInDoc = {
 		positif: {},
 		negatif: {}
